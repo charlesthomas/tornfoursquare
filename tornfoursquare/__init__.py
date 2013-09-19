@@ -5,6 +5,8 @@ from tornado import httpclient
 from tornado.httputil import url_concat
 import tornado.escape
 
+version = '0.0.1'
+__version__ = version
 
 class FoursquareMixin:
     """Foursquare Oauth2 authentication.

@@ -1,6 +1,5 @@
 from setuptools import setup
-
-version = '0.0.1'
+from tornfoursquare import version
 
 setup(name='tornfoursquare',
       version=version,
