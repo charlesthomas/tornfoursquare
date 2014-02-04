@@ -45,7 +45,6 @@ class FoursquareMixin:
             callback(None)
             return
         
-        logging.info('response.body type: %s' % type(response.body))
         session = json_decode(response.body)
         self.foursquare_request(
             path="/users/self",
