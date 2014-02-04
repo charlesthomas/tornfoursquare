@@ -3,7 +3,7 @@ import logging
 import datetime
 from tornado import httpclient
 from tornado.httputil import url_concat
-import tornado.escape
+from tornado.escape import json_decode
 
 version = '0.0.1'
 __version__ = version
@@ -45,7 +45,8 @@ class FoursquareMixin:
             callback(None)
             return
         
-        session = tornado.escape.json_decode(response.body)
+        logging.info('response.body type: %s' % type(response.body))
+        session = json_decode(response.body)
         self.foursquare_request(
             path="/users/self",
             callback=self.async_callback(self._parse_user_response, callback, session),
@@ -55,6 +56,9 @@ class FoursquareMixin:
         if user is None:
             callback(None)
             return
+        # user is a weirdly encoded json string ('"{\\"meta\\"...)
+        # luckily double decoding works
+        user = json_decode(json_decode(user))
         user.update(dict(access_token = session['access_token']))
         callback(user)
     
