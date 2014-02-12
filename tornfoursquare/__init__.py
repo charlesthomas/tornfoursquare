@@ -3,7 +3,7 @@ import logging
 import datetime
 from tornado import httpclient
 from tornado.httputil import url_concat
-from tornado.escape import json_decode
+from tornado.escape import json_decode, json_encode
 
 version = '0.0.1'
 __version__ = version
@@ -92,7 +92,7 @@ class FoursquareMixin:
             http.fetch(url, callback=callback)
 
     def _on_foursquare_request(self, callback, response): 
-        response_body = tornado.escape.json_encode(response.body)
+        response_body = json_encode(response.body)
         if response.error:
             logging.warning(
                 "Foursquare Error(%s) :: Message: %s, URL: %s",
